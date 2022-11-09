@@ -13,7 +13,6 @@ const getMeals = asyncWrapper(
             const $ = cheerio.load(data);
             const mealAsString = $('.mx-1');
             const meals = [];
-
             mealAsString.each((idx, el) => {
                 const mealJson = {};
                 const elements = $(el).children('.card-body').text().trim().split('SALATA-SANDVİÇ BÜFESİ');
@@ -21,8 +20,6 @@ const getMeals = asyncWrapper(
                 elements.forEach((value, indx) => {//*body salata-sandvic'ten ayrılmıs olarak geliyor
                     const core = value.split('\t');//* ogunler ve diger cop degerler ayrılmıs olarak geliyor
                     core.forEach((value, indx) => {
-                        console.log({ value });
-
                         if (value.length != 0 && !value.startsWith('Per') && !value.startsWith('Ala') && !value.startsWith('\n')) {
                             final.push(`${value}SALATA-SANDVİÇ BÜFESİ\n`);
                         }
@@ -43,7 +40,6 @@ const getMeals = asyncWrapper(
                 meals.push(mealJson);
 
             });
-            //console.log(meals);
 
             res.status(200).json({ result: meals });
         } catch (error) {
@@ -51,6 +47,4 @@ const getMeals = asyncWrapper(
         }
     }
 );
-
-
 module.exports = { getMeals }
